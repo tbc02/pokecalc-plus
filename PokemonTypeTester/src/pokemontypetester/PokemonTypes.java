@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * An enum of Pokemon types that have weaknesses, resistances, and immunities.
  * 
- * @author Max Fagenson
+ * @author tbc02
  *
  */
 public enum PokemonTypes {

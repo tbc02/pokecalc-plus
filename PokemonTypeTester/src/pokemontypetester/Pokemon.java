@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * A Pokemon represented by its types.
  * 
- * @author Max Fagenson
+ * @author tbc02
  * @see {@link #PokemonTypes}
  */
 public class Pokemon {
