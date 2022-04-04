@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author Max Fagenson
  * @see {@link #PokemonTypes}
  */
-public class Pokemon { //test
+public class Pokemon {
 
 	private final PokemonTypes type1;
 	private final PokemonTypes type2;
