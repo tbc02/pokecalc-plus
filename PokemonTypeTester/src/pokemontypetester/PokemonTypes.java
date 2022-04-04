@@ -1,6 +1,7 @@
 package pokemontypetester;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,11 +55,8 @@ public enum PokemonTypes {
 	 *      {@link #immuneTo(PokemonTypes...)}
 	 */
 	public Optional<List<PokemonTypes>> weaknesses() {
-		if (weakTo == null)
-			return Optional.empty();
-		List<PokemonTypes> out = new ArrayList<>();
-		weakTo.forEach((x) -> out.add(fromString(x)));
-		return Optional.of(out);
+		return weakTo == null ? Optional.empty()
+				: Optional.of(weakTo.stream().map(PokemonTypes::fromString).collect(Collectors.toList()));
 	}
 
 	/**
@@ -94,11 +92,8 @@ public enum PokemonTypes {
 	 *      {@link #immuneTo(PokemonTypes...)}
 	 */
 	public Optional<List<PokemonTypes>> resistances() {
-		if (resistantTo == null)
-			return Optional.empty();
-		List<PokemonTypes> out = new ArrayList<>();
-		resistantTo.forEach((x) -> out.add(fromString(x)));
-		return Optional.of(out);
+		return resistantTo == null ? Optional.empty()
+				: Optional.of(resistantTo.stream().map(PokemonTypes::fromString).collect(Collectors.toList()));
 	}
 
 	/**
@@ -110,7 +105,8 @@ public enum PokemonTypes {
 	 *      {@link #resistantTo(PokemonTypes...)}
 	 */
 	public boolean resistantTo(PokemonTypes type) {
-		return resistantTo == null ? false : resistantTo.contains(Objects.requireNonNull(type).toString().toLowerCase());
+		return resistantTo == null ? false
+				: resistantTo.contains(Objects.requireNonNull(type).toString().toLowerCase());
 	}
 
 	/**
@@ -134,11 +130,8 @@ public enum PokemonTypes {
 	 *      {@link #immuneTo(PokemonTypes...)}
 	 */
 	public Optional<List<PokemonTypes>> immunities() {
-		if (immuneTo == null)
-			return Optional.empty();
-		List<PokemonTypes> out = new ArrayList<>();
-		immuneTo.forEach((x) -> out.add(fromString(x)));
-		return Optional.of(out);
+		return immuneTo == null ? Optional.empty()
+				: Optional.of(immuneTo.stream().map(PokemonTypes::fromString).collect(Collectors.toList()));
 	}
 
 	/**
@@ -177,11 +170,11 @@ public enum PokemonTypes {
 	 *      {@link #immunities()}
 	 */
 	public double calcDmgMult(PokemonTypes type) {
-		if (immuneTo != null && immuneTo.contains(Objects.requireNonNull(type).toString().toLowerCase()))
+		if (immuneTo(type))
 			return 0;
-		if (resistantTo != null && resistantTo.contains(Objects.requireNonNull(type).toString().toLowerCase()))
+		if (resistantTo(type))
 			return .5;
-		if (weakTo != null && weakTo.contains(Objects.requireNonNull(type).toString().toLowerCase()))
+		if (weakTo(type))
 			return 2;
 		return 1;
 	}
